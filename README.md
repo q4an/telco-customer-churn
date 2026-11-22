@@ -13,7 +13,7 @@ Müşterilerin ayrılıp ayrılmayacağını tahmin etmek için hazırladığım
 
 ## Kurulum
 
-Komutları bu README'nin bulunduğu **project_1 klasöründe** çalıştır.
+Komutları bu README'nin bulunduğu **depo kökünde** çalıştır.
 Kontrol edilen ortam Python **3.13**; paket sürümleri `requirements.txt` içinde sabitlenmiştir.
 
 Windows / PowerShell:
@@ -35,7 +35,7 @@ python3.13 -m venv .venv
 [IBM Telco Customer Churn CSV dosyasını](https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv) indirip `data/Telco-Customer-Churn.csv` olarak kaydet.
 PowerShell indirme komutu ve veri açıklaması için [data/README.md](data/README.md) dosyasına bak.
 
-CSV GitHub'a dahil edilmez. Yerel dosya korunur; depoyu yeni indiren kişi veriyi ayrıca edinir.
+CSV güncel sürümde Git tarafından izlenmez. İlk committe yer aldığı için eski sürümlerde erişilebilir; depoyu yeni indiren kişi veriyi kaynağından ayrıca edinebilir.
 
 ## Çalıştırma
 
@@ -60,7 +60,7 @@ Model ve rapor şu an dosyaya kaydedilmez; sonuçlar terminalde gösterilir.
 ## Dosya yapısı
 
 ```text
-project_1/
+telco-customer-churn/
 ├── src/
 │   ├── main.py            # Ana çalıştırma akışı
 │   ├── data.py            # Veriyi yükleme ve bölme
@@ -75,7 +75,7 @@ project_1/
 └── README.md
 ```
 
-Çalıştırılacak güncel kod **`src/main.py`** dosyasıdır. Kök klasördeki Python dosyaları ve notebook'lar öğrenme geçmişini korumak için bırakılmıştır; ana eğitim akışı bunları kullanmaz.
+Çalıştırılacak güncel kod **`src/main.py`** dosyasıdır. `EDA.ipynb` keşif notları içerir; ana eğitim akışı bu notebook'u kullanmaz.
 
 Notebook'ları açmak için isteğe bağlı kurulum:
 
@@ -84,7 +84,7 @@ Notebook'ları açmak için isteğe bağlı kurulum:
 .\.venv\Scripts\python.exe -m jupyterlab
 ```
 
-Notebook'ların özgün yazımı korunmuştur. CSV okuyan hücrelerde yerel bilgisayara ait mutlak yollar vardır; başka bir bilgisayarda bu hücredeki yolu `data/Telco-Customer-Churn.csv` olarak uyarlamak gerekir. Notebook'lar eğitim pipeline'ından bağımsız keşif notlarıdır.
+Notebook'u depo kökünden aç. CSV okuyan hücre `data/Telco-Customer-Churn.csv` yolunu kullanır. Notebook, eğitim pipeline'ından bağımsız keşif notları içerir.
 
 ## Sonuçları nasıl okuyorum?
 
@@ -109,24 +109,3 @@ Gerçek: Ayrılıyor           82               292
 Parametre seçimi eğitim verisinde yapılır; test seti aramaya verilmez. ROC-AUC'ye göre seçilen modelin standart karar eşiğindeki precision'ı en yüksek olmak zorunda değildir. Eşik optimizasyonu henüz uygulanmamıştır. Sonraki adım, eğitim verisinde doğrulama tahminleriyle precision–recall dengesini incelemektir; test seti tekrar tekrar ayar seçmek için kullanılmamalıdır.
 
 Bu bir öğrenme projesidir; üretim ortamında doğrulanmış bir müşteri kaybı sistemi değildir.
-
-## GitHub'a yükleme
-
-Depo kökü olarak bütün `ML_Learning` klasörünü değil, **bu `project_1` klasörünü** kullan. `.gitignore`; sanal ortamı, veri dosyasını, önbellekleri ve yerel ortam dosyalarını hariç tutar.
-
-```powershell
-git init
-git add .
-git status
-git commit -m "Prepare Telco churn learning project"
-git branch -M main
-```
-
-GitHub'da boş bir depo oluşturduktan sonra aşağıdaki adresteki `KULLANICI` ve `DEPO` alanlarını kendi bilgilerinle değiştir:
-
-```powershell
-git remote add origin https://github.com/KULLANICI/DEPO.git
-git push -u origin main
-```
-
-`git status` çıktısında `.venv` veya CSV görürsen commit atmadan önce depo kökünü ve `.gitignore` dosyasını kontrol et.
